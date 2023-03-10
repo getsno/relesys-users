@@ -1,0 +1,53 @@
+{
+    "name": "getsno/relesys-api",
+    "description": "Relesys API client for Laravel",
+    "keywords": [
+        "getsno",
+        "relesys-api"
+    ],
+    "homepage": "https://github.com/getsno/relesys-api",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Anton Samofal",
+            "email": "devtosha@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/support": "^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Getsno\\RelesysApi\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Getsno\\RelesysApi\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Getsno\\RelesysApi\\RelesysApiServiceProvider"
+            ],
+            "aliases": {
+                "RelesysApi": "Getsno\\RelesysApi\\RelesysApiFacade"
+            }
+        }
+    }
+}
