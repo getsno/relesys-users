@@ -1,13 +1,10 @@
 <?php
 
-namespace Getsno\RelesysApi;
+namespace Getsno\Relesys;
 
 use Illuminate\Support\Facades\Facade;
 
-/**
- * @see \Getsno\RelesysApi\Skeleton\SkeletonClass
- */
-class RelesysApiFacade extends Facade
+class RelesysFacade extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -16,6 +13,6 @@ class RelesysApiFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'relesys-api';
+        return 'relesys';
     }
 }

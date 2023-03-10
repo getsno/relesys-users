@@ -1,11 +1,13 @@
 {
-    "name": "getsno/relesys-api",
-    "description": "Relesys API client for Laravel",
+    "name": "getsno/relesys",
+    "description": "Laravel wrapper package for the Relesys API",
     "keywords": [
         "getsno",
+        "relesys",
+        "relesys-laravel",
         "relesys-api"
     ],
-    "homepage": "https://github.com/getsno/relesys-api",
+    "homepage": "https://github.com/getsno/relesys",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -16,7 +18,7 @@
         }
     ],
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.1",
         "illuminate/support": "^8.0"
     },
     "require-dev": {
@@ -25,12 +27,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Getsno\\RelesysApi\\": "src"
+            "Getsno\\Relesys\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Getsno\\RelesysApi\\Tests\\": "tests"
+            "Getsno\\Relesys\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -43,10 +45,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Getsno\\RelesysApi\\RelesysApiServiceProvider"
+                "Getsno\\Relesys\\RelesysServiceProvider"
             ],
             "aliases": {
-                "RelesysApi": "Getsno\\RelesysApi\\RelesysApiFacade"
+                "Relesys": "Getsno\\Relesys\\RelesysFacade"
             }
         }
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Getsno\RelesysApi;
+namespace Getsno\Relesys;
 
-class RelesysApi
+class Relesys
 {
     // Build your next great package.
 }
