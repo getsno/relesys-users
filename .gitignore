@@ -1,2 +1,7 @@
 .idea
 .DS_Store
+/.phpunit.cache
+/vendor
+
+/composer.lock
+docker/.env
