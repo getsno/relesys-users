@@ -11,6 +11,6 @@
 |
 */
 return [
-    'relesys_client_id'     => env('RELESYS_CLIENT_ID'),
-    'relesys_client_secret' => env('RELESYS_CLIENT_SECRET'),
+    'client_id'     => env('RELESYS_CLIENT_ID'),
+    'client_secret' => env('RELESYS_CLIENT_SECRET'),
 ];
