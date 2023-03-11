@@ -9,15 +9,13 @@ class RelesysServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application services.
      */
-    public function boot()
+    public function boot(): void
     {
         /*
          * Optional methods to load your package assets
          */
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'relesys');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'relesys');
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -37,14 +35,14 @@ class RelesysServiceProvider extends ServiceProvider
     /**
      * Register the application services.
      */
-    public function register()
+    public function register(): void
     {
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'relesys');
 
         // Register the main class to use with the facade
         $this->app->singleton('relesys', function () {
-            return new Relesys;
+            return new Relesys();
         });
     }
 }
