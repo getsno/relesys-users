@@ -4,5 +4,8 @@ namespace Getsno\Relesys;
 
 class Relesys
 {
-    // Build your next great package.
+    public function test(): int
+    {
+        return 1;
+    }
 }

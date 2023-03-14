@@ -19,7 +19,7 @@ class RelesysServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('relesys.php'),
+                __DIR__.'/../config/relesys.php' => config_path('relesys.php'),
             ], 'config');
 
             // Publishing the translation files.
@@ -38,11 +38,11 @@ class RelesysServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'relesys');
+        $this->mergeConfigFrom(__DIR__.'/../config/relesys.php', 'relesys');
 
         // Register the main class to use with the facade
-        $this->app->singleton('relesys', function () {
-            return new Relesys();
-        });
+        // $this->app->singleton(Relesys::class, function () {
+        //     return new Relesys();
+        // });
     }
 }
