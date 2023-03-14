@@ -48,7 +48,7 @@
                 "Getsno\\Relesys\\RelesysServiceProvider"
             ],
             "aliases": {
-                "Relesys": "Getsno\\Relesys\\RelesysFacade"
+                "Relesys": "Getsno\\Relesys\\Facades\\RelesysFacade"
             }
         }
     }

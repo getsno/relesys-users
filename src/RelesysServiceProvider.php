@@ -41,8 +41,6 @@ class RelesysServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/relesys.php', 'relesys');
 
         // Register the main class to use with the facade
-        // $this->app->singleton(Relesys::class, function () {
-        //     return new Relesys();
-        // });
+        $this->app->singleton(Relesys::class, static fn() => new Relesys());
     }
 }
