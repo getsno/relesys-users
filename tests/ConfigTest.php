@@ -9,7 +9,13 @@ class ConfigTest extends TestCase
         $relesysConfig = config('relesys');
 
         $this->assertIsArray($relesysConfig);
-        $this->assertArrayHasKey('client_id', $relesysConfig);
-        $this->assertArrayHasKey('client_secret', $relesysConfig);
+        $this->assertEqualsCanonicalizing(
+            [
+                'client_id',
+                'client_secret',
+                'scopes',
+            ],
+            array_keys($relesysConfig)
+        );
     }
 }

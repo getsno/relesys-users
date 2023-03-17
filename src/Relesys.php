@@ -2,26 +2,30 @@
 
 namespace Getsno\Relesys;
 
+use Getsno\Relesys\Api\UserManagement\Users;
+use Getsno\Relesys\Api\UserManagement\UserGroups;
+use Getsno\Relesys\Api\UserManagement\Departments;
+
 class Relesys
 {
-    private string $token;
-
-    public function __construct()
+    public function __construct(
+        protected readonly RelesysHttpClient $httpClient,
+    )
     {
-        $this->token = random_int(1, 100);
     }
 
-    // public static function getInstance(): self
-    // {
-    //     if (!self::$instance) {
-    //         self::$instance = new self();
-    //     }
-    //
-    //     return self::$instance;
-    // }
-
-    public function getToken(): string
+    public function departments(): Departments
     {
-        return $this->token;
+        return new Departments($this->httpClient);
+    }
+
+    public function userGroups(): UserGroups
+    {
+        return new UserGroups($this->httpClient);
+    }
+
+    public function users(): Users
+    {
+        return new Users($this->httpClient);
     }
 }
