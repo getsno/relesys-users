@@ -3,13 +3,14 @@
 namespace Getsno\Relesys;
 
 use Getsno\Relesys\Api\UserManagement\Users;
+use Getsno\Relesys\HttpClient\HttpClient;
 use Getsno\Relesys\Api\UserManagement\UserGroups;
 use Getsno\Relesys\Api\UserManagement\Departments;
 
 class Relesys
 {
     public function __construct(
-        protected readonly RelesysHttpClient $httpClient,
+        protected readonly HttpClient $httpClient,
     )
     {
     }

@@ -2,12 +2,12 @@
 
 namespace Getsno\Relesys\Api;
 
-use Getsno\Relesys\RelesysHttpClient;
+use Getsno\Relesys\HttpClient\HttpClient;
 
 class Api
 {
     public function __construct(
-        readonly protected RelesysHttpClient $httpClient,
+        readonly protected HttpClient $httpClient,
     )
     {
     }

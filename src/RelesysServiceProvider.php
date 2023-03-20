@@ -4,6 +4,7 @@ namespace Getsno\Relesys;
 
 use Illuminate\Support\ServiceProvider;
 use Getsno\Relesys\Exceptions\RelesysException;
+use Getsno\Relesys\HttpClient\HttpClient;
 
 class RelesysServiceProvider extends ServiceProvider
 {
@@ -49,7 +50,7 @@ class RelesysServiceProvider extends ServiceProvider
                 throw RelesysException::invalidAuthCredentials();
             }
 
-            return new Relesys(new RelesysHttpClient($client_id, $client_secret));
+            return new Relesys(new HttpClient($client_id, $client_secret));
         });
     }
 }

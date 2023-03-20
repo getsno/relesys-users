@@ -5,9 +5,8 @@ namespace Getsno\Relesys\Tests\Api\UsersManagement;
 use Mockery;
 use Mockery\MockInterface;
 use Getsno\Relesys\Tests\TestCase;
-use Getsno\Relesys\RelesysHttpClient;
-use Getsno\Relesys\Facades\RelesysFacade;
 use Getsno\Relesys\Api\UserManagement\Users;
+use Getsno\Relesys\HttpClient\HttpClient;
 use Getsno\Relesys\Api\UserManagement\Entities\User;
 
 use function Getsno\Relesys\FakeResponses\getUserResponse;
@@ -18,28 +17,31 @@ class UsersTest extends TestCase
     {
         parent::setUp();
 
-        $relesysHttpClientMock = $this->mock(RelesysHttpClient::class, function (MockInterface $mock) {
-            $mock->shouldReceive('get')
-                ->with('users')
-                ->andReturn([
-                    'count' => 2,
-                    'data'  => [
-                        [
-                            'id' => '123',
+        if ($this->isTestingInIsolation()) {
+            $relesysHttpClientMock = $this->mock(HttpClient::class, function (MockInterface $mock) {
+                $mock->shouldReceive('get')
+                    ->with('users')
+                    ->andReturn([
+                        'count' => 2,
+                        'data'  => [
+                            [
+                                'id' => '123',
+                            ],
+                            [
+                                'id' => '456',
+                            ],
                         ],
-                        [
-                            'id' => '456',
-                        ],
-                    ],
-                ]);
+                    ]);
 
-            $mock->shouldReceive('get')
-                ->with('users/123')
-                ->andReturn(getUserResponse('123'));
-        });
-        $usersApiMock = Mockery::mock(Users::class, [$relesysHttpClientMock])->makePartial();
-        RelesysFacade::shouldReceive('users')
-            ->andReturn($usersApiMock);
+                $mock->shouldReceive('get')
+                    ->with('users/123')
+                    ->andReturn(getUserResponse('123'));
+            });
+            $usersApiMock = Mockery::mock(Users::class, [$relesysHttpClientMock])->makePartial();
+            \Relesys::shouldReceive('users')
+                ->andReturn($usersApiMock);
+        }
+
     }
 
     public function testUsersFacade(): void
