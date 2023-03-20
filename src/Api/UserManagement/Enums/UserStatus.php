@@ -2,10 +2,10 @@
 
 namespace Getsno\Relesys\Api\UserManagement\Enums;
 
-enum UserStatus
+enum UserStatus: string
 {
-    case Disabled;
-    case Activated;
-    case Pending;
-    case LoginBlocked;
+    case DISABLED = 'Disabled';
+    case ACTIVATED = 'Activated';
+    case PENDING = 'Pending';
+    case LOGIN_BLOCKED = 'LoginBlocked';
 }

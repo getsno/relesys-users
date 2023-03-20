@@ -2,8 +2,13 @@
 
 namespace Getsno\Relesys\Api\UserManagement\ValueObjects;
 
+use Getsno\Relesys\Traits\FillableTrait;
+
 class AdditionalDepartment
 {
-    public readonly string $dataSource;
-    public readonly string $id;
+    use FillableTrait;
+
+    public string $id;
+
+    public string $dataSource;
 }

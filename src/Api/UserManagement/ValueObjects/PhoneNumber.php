@@ -2,8 +2,12 @@
 
 namespace Getsno\Relesys\Api\UserManagement\ValueObjects;
 
+use Getsno\Relesys\Traits\FillableTrait;
+
 class PhoneNumber
 {
-    public readonly int $countryCode;
-    public readonly string $number;
+    use FillableTrait;
+
+    public readonly ?int $countryCode;
+    public readonly ?string $number;
 }

@@ -2,8 +2,12 @@
 
 namespace Getsno\Relesys\Api\UserManagement\ValueObjects;
 
+use Getsno\Relesys\Traits\FillableTrait;
+
 class UserGroup
 {
-    public readonly string $dataSource;
+    use FillableTrait;
+
     public readonly string $id;
+    public readonly ?string $dataSource;
 }

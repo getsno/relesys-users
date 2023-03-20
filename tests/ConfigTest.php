@@ -13,7 +13,6 @@ class ConfigTest extends TestCase
             [
                 'client_id',
                 'client_secret',
-                'scopes',
             ],
             array_keys($relesysConfig)
         );
