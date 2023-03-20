@@ -11,5 +11,7 @@
         <ini name="intl.default_locale" value="C.UTF-8" />
         <ini name="memory_limit" value="2048M" />
         <env name="DB_CONNECTION" value="testing" />
+        <!-- <env name="RELESYS_CLIENT_ID" value="" /> -->
+        <!-- <env name="RELESYS_CLIENT_SECRET" value="" /> -->
     </php>
 </phpunit>
