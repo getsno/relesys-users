@@ -34,7 +34,7 @@ class HttpClient
     /**
      * @throws RelesysHttpClientException
      */
-    public function post(string $path, array $params = []): array
+    public function post(string $path, array $params = []): ?array
     {
         return $this->sendRequest(HttpMethod::POST, $path, $params);
     }
@@ -42,9 +42,9 @@ class HttpClient
     /**
      * @throws RelesysHttpClientException
      */
-    public function put(string $path, array $params = []): array
+    public function put(string $path, array $params = []): void
     {
-        return $this->sendRequest(HttpMethod::PUT, $path, $params);
+        $this->sendRequest(HttpMethod::PUT, $path, $params);
     }
 
     /**
@@ -58,15 +58,15 @@ class HttpClient
     /**
      * @throws RelesysHttpClientException
      */
-    public function delete(string $path): array
+    public function delete(string $path): void
     {
-        return $this->sendRequest(HttpMethod::DELETE, $path);
+        $this->sendRequest(HttpMethod::DELETE, $path);
     }
 
     /**
      * @throws RelesysHttpClientException
      */
-    protected function sendRequest(HttpMethod $type, string $path, array $params = []): array
+    protected function sendRequest(HttpMethod $type, string $path, array $params = []): ?array
     {
         try {
             $this->token ??= $this->requestToken();

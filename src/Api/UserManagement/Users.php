@@ -5,6 +5,7 @@ namespace Getsno\Relesys\Api\UserManagement;
 use Getsno\Relesys\Api\Api;
 use Getsno\Relesys\Api\UserManagement\Entities\User;
 use Getsno\Relesys\Exceptions\RelesysHttpClientException;
+use Getsno\Relesys\Api\UserManagement\Enums\PasswordResetLinkDeliveryMethod;
 
 class Users extends Api
 {
@@ -13,11 +14,11 @@ class Users extends Api
      */
     public function getUsers(): array
     {
-        $response = $this->httpClient->get('users')['data'];
+        $responseData = $this->httpClient->get('users')['data'];
 
         return array_map(
-            static fn(array $userData) => User::fromArray($userData)->setOriginalResponse($userData),
-            $response
+            static fn(array $user) => User::fromArray($user)->setSource($user),
+            $responseData
         );
     }
 
@@ -26,9 +27,9 @@ class Users extends Api
      */
     public function getUser(string $userId): User
     {
-        $response = $this->httpClient->get("users/$userId");
+        $responseData = $this->httpClient->get("users/$userId")['data'];
 
-        return User::fromArray($response['data'])->setOriginalResponse($response);
+        return User::fromArray($responseData)->setSource($responseData);
     }
 
     /**
@@ -36,8 +37,26 @@ class Users extends Api
      */
     public function createUser(User $user): User
     {
-        $response = $this->httpClient->post('users', $user->toArray());
+        $responseData = $this->httpClient->post('users', $user->toArray())['data'];
 
-        return User::fromArray($response['data'])->setOriginalResponse($response);
+        return User::fromArray($responseData)->setSource($responseData);
+    }
+
+    /**
+     * @throws RelesysHttpClientException
+     */
+    public function sendPasswordResetLink(
+        string $userId,
+        PasswordResetLinkDeliveryMethod $deliveryMethod = PasswordResetLinkDeliveryMethod::PHONE,
+        bool $resetLoginCode = false
+    ): void
+    {
+        $this->httpClient->post(
+            "users/$userId/passwordresetlink",
+            [
+                'deliveryMethod' => $deliveryMethod->value,
+                'resetLoginCode' => $resetLoginCode
+            ]
+        );
     }
 }

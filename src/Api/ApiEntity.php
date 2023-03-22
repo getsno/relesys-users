@@ -13,11 +13,11 @@ abstract class ApiEntity
     /**
      * The original decoded API response on which the entity is based.
      */
-    public readonly array $originalResponse;
+    public readonly array $source;
 
-    public function setOriginalResponse(array $response): self
+    public function setSource(array $source): self
     {
-        $this->originalResponse = $response;
+        $this->source = $source;
 
         return $this;
     }

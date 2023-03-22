@@ -2,8 +2,11 @@
 
 namespace Getsno\Relesys\Tests;
 
-use Getsno\Relesys\Facades\RelesysFacade;
+use Mockery;
+use Getsno\Relesys\HttpClient\HttpClient;
 use Getsno\Relesys\RelesysServiceProvider;
+use Getsno\Relesys\Api\UserManagement\Users;
+use Getsno\Relesys\Facades\RelesysFacade as Relesys;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -35,5 +38,15 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $client_secret = config('relesys.client_secret');
 
         return $client_id === 'testing' && $client_secret === 'testing';
+    }
+
+    protected function mockFacadeIfTestingInIsolation(string $apiType, ?callable $mockCallback = null): void
+    {
+        $relesysHttpClientMock = $this->mock(HttpClient::class, $mockCallback);
+        $usersApiMock = Mockery::mock(Users::class, [$relesysHttpClientMock])->makePartial();
+
+        Relesys::shouldReceive($apiType)
+            ->once()
+            ->andReturn($usersApiMock);
     }
 }

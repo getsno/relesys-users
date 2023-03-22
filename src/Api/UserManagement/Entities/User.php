@@ -2,6 +2,7 @@
 
 namespace Getsno\Relesys\Api\UserManagement\Entities;
 
+use Carbon\Carbon;
 use Getsno\Relesys\Api\ApiEntity;
 use Getsno\Relesys\Api\UserManagement\Enums\UserStatus;
 use Getsno\Relesys\Api\UserManagement\ValueObjects\UserGroup;
@@ -14,12 +15,12 @@ class User extends ApiEntity
      * @var AdditionalDepartment[]
      */
     public array $additionalDepartments = [];
-    public ?string $birthDate;
+    public ?Carbon $birthDate;
     public ?string $dataSource;
     public ?string $departmentUrl;
     public ?string $email;
-    public ?string $employmentDate;
-    public ?string $employmentEndDate;
+    public ?Carbon $employmentDate;
+    public ?Carbon $employmentEndDate;
     public ?string $externalId;
     public string $id;
     public string $name;
@@ -64,5 +65,20 @@ class User extends ApiEntity
         foreach ($userGroups as $userGroup) {
             $this->userGroups[] = UserGroup::fromArray($userGroup);
         }
+    }
+
+    protected function setBirthDate(string $date): void
+    {
+        $this->birthDate = Carbon::parse($date);
+    }
+
+    protected function setEmploymentDate(string $date): void
+    {
+        $this->employmentDate = Carbon::parse($date);
+    }
+
+    protected function setEmploymentEndDate(string $date): void
+    {
+        $this->employmentEndDate = Carbon::parse($date);
     }
 }
