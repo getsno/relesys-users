@@ -6,10 +6,11 @@ use Mockery;
 use Mockery\MockInterface;
 use Getsno\Relesys\Tests\TestCase;
 use Getsno\Relesys\HttpClient\HttpClient;
+use Getsno\Relesys\Facades\RelesysFacade as Relesys;
 use Getsno\Relesys\Api\UserManagement\Users;
 use Getsno\Relesys\Api\UserManagement\Entities\User;
-
 use Getsno\Relesys\Api\UserManagement\Enums\UserStatus;
+use Getsno\Relesys\Exceptions\RelesysHttpClientException;
 
 use function Getsno\Relesys\Tests\getUserResponse;
 use function Getsno\Relesys\Tests\getUsersResponse;
@@ -39,33 +40,41 @@ class UsersTest extends TestCase
             });
             $usersApiMock = Mockery::mock(Users::class, [$relesysHttpClientMock])->makePartial();
 
-            \Relesys::shouldReceive('users')
+            Relesys::shouldReceive('users')
                 ->andReturn($usersApiMock);
         }
     }
 
     public function testUsersFacade(): void
     {
-        $this->assertInstanceOf(Users::class, \Relesys::users());
+        $this->assertInstanceOf(Users::class, Relesys::users());
     }
 
+    /**
+     * @throws RelesysHttpClientException
+     */
     public function testGetUser(): void
     {
-        $user = \Relesys::users()->getUser('123');
+        $user = Relesys::users()->getUser('123');
 
-        $this->assertInstanceOf(User::class, $user);
         $this->assertEquals('123', $user->id);
         $this->assertEquals(UserStatus::ACTIVATED->value, $user->status->value);
     }
 
+    /**
+     * @throws RelesysHttpClientException
+     */
     public function testGetUsers(): void
     {
-        $users = \Relesys::users()->getUsers();
+        $users = Relesys::users()->getUsers();
 
         $this->assertIsArray($users);
         $this->assertContainsOnlyInstancesOf(User::class, $users);
     }
 
+    /**
+     * @throws RelesysHttpClientException
+     */
     public function testCreateUser(): void
     {
         $user = User::fromArray([
@@ -82,9 +91,8 @@ class UsersTest extends TestCase
                 ],
             ],
         ]);
-        $newUser = \Relesys::users()->createUser($user);
+        $newUser = Relesys::users()->createUser($user);
 
-        $this->assertInstanceOf(User::class, $newUser);
-        $this->assertEquals('Anton', $user->name);
+        $this->assertEquals('Anton', $newUser->name);
     }
 }
