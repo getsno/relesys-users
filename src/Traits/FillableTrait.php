@@ -2,7 +2,6 @@
 
 namespace Getsno\Relesys\Traits;
 
-use ReflectionProperty;
 use Illuminate\Support\Str;
 
 trait FillableTrait
@@ -12,9 +11,9 @@ trait FillableTrait
         $data = is_object($data) ? get_object_vars($data) : $data;
 
         foreach ($data as $key => $value) {
-            if (property_exists(__CLASS__, $key)) {
+            if (property_exists($this, $key)) {
                 $setter = 'set' . Str::ucfirst($key);
-                if (method_exists(__CLASS__, $setter)) {
+                if ($value !== null && method_exists($this, $setter)) {
                     $this->$setter($value);
                 } else {
                     $this->$key = $value;
@@ -23,10 +22,5 @@ trait FillableTrait
         }
 
         return $this;
-    }
-
-    public static function fromArray(array $data): self
-    {
-        return (new self())->fill($data);
     }
 }

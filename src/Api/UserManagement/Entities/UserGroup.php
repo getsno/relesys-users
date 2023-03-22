@@ -2,12 +2,10 @@
 
 namespace Getsno\Relesys\Api\UserManagement\Entities;
 
-use Getsno\Relesys\Traits\FillableTrait;
+use Getsno\Relesys\Api\ApiEntity;
 
-class UserGroup
+class UserGroup extends ApiEntity
 {
-    use FillableTrait;
-
     public string $description;
     public string $externalId;
     public string $id;

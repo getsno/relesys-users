@@ -11,8 +11,8 @@ class RelesysHttpClientException extends RelesysException
         return new static("Failed to get Bearer token: $error", $code, $prevException);
     }
 
-    public static function getRequestFailed(string $error, int $code, RequestException $prevException): self
+    public static function requestFailed(string $error, int $code, RequestException $prevException): self
     {
-        return new static("GET request failed: $error", $code, $prevException);
+        return new static("API request failed: $error", $code, $prevException);
     }
 }

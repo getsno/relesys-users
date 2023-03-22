@@ -24,7 +24,6 @@
         "illuminate/support": "^10.0"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.13",
         "orchestra/testbench": "^8.0",
         "phpunit/phpunit": "^10.0"
     },
@@ -38,7 +37,7 @@
             "Getsno\\Relesys\\Tests\\": "tests"
         },
         "files": [
-          "src/FakeResponses.php"
+          "tests/FakeResponses.php"
         ]
     },
     "scripts": {

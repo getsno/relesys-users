@@ -2,13 +2,14 @@
 
 namespace Getsno\Relesys\Api\UserManagement\ValueObjects;
 
-use Getsno\Relesys\Traits\FillableTrait;
+use Getsno\Relesys\Traits\CreatableFromArray;
+use Getsno\Relesys\Traits\ConvertibleToArray;
 
 class AdditionalDepartment
 {
-    use FillableTrait;
+    use CreatableFromArray;
+    use ConvertibleToArray;
 
     public string $id;
-
-    public string $dataSource;
+    public ?string $dataSource;
 }

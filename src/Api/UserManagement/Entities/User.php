@@ -2,26 +2,22 @@
 
 namespace Getsno\Relesys\Api\UserManagement\Entities;
 
-use JetBrains\PhpStorm\ArrayShape;
-use Getsno\Relesys\Traits\FillableTrait;
-use Getsno\Relesys\Api\ApiEntityInterface;
+use Getsno\Relesys\Api\ApiEntity;
 use Getsno\Relesys\Api\UserManagement\Enums\UserStatus;
+use Getsno\Relesys\Api\UserManagement\ValueObjects\UserGroup;
 use Getsno\Relesys\Api\UserManagement\ValueObjects\PhoneNumber;
 use Getsno\Relesys\Api\UserManagement\ValueObjects\AdditionalDepartment;
-use \Getsno\Relesys\Api\UserManagement\ValueObjects\UserGroup;
 
-class User implements ApiEntityInterface
+class User extends ApiEntity
 {
-    use FillableTrait;
-
     /**
      * @var AdditionalDepartment[]
      */
-    public array $additionalDepartments;
+    public array $additionalDepartments = [];
     public ?string $birthDate;
     public ?string $dataSource;
     public ?string $departmentUrl;
-    public string $email;
+    public ?string $email;
     public ?string $employmentDate;
     public ?string $employmentEndDate;
     public ?string $externalId;
@@ -38,7 +34,7 @@ class User implements ApiEntityInterface
     /**
      * @var UserGroup[]
      */
-    public array $userGroups;
+    public array $userGroups = [];
     public ?string $userName;
 
     protected function setAdditionalDepartments(array $additionalDepartments): void

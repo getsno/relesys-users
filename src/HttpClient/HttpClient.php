@@ -70,14 +70,15 @@ class HttpClient
     {
         try {
             $this->token ??= $this->requestToken();
-            $response = $this->httpClient->withToken($this->token)->$type->value()($path, $params);
+            $httpMethod = $type->value;
+            $response = $this->httpClient->withToken($this->token)->$httpMethod($path, $params);
 
-            $response->throwUnlessStatus(200);
+            $response->throw();
 
             return $response->json();
         } catch (RequestException $e) {
             $error = $e->response?->object()->error ?? $e->getMessage();
-            throw RelesysHttpClientException::getRequestFailed($error, $e->getCode(), $e);
+            throw RelesysHttpClientException::requestFailed($error, $e->getCode(), $e);
         }
     }
 

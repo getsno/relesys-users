@@ -1,6 +1,8 @@
 <?php
 
-namespace Getsno\Relesys\FakeResponses;
+namespace Getsno\Relesys\Tests;
+
+use Getsno\Relesys\Api\UserManagement\Entities\User;
 
 function getUserResponse(string $id): array
 {
@@ -23,10 +25,7 @@ function getUserResponse(string $id): array
                 'countryCode' => 47,
                 'number'      => '11111111',
             ],
-            'secondaryPhoneNumber'  => [
-                'countryCode' => null,
-                'number'      => null,
-            ],
+            'secondaryPhoneNumber'  => null,
             'birthDate'             => fake()->date,
             'primaryDepartmentId'   => fake()->uuid,
             'additionalDepartments' => [
@@ -68,4 +67,11 @@ function getUsersResponse(int $amount): array
     }
 
     return $users;
+}
+
+function createUserResponse(User $user): array
+{
+    return [
+        'data' => $user->toArray()
+    ];
 }

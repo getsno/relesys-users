@@ -13,9 +13,11 @@ class Users extends Api
      */
     public function getUsers(): array
     {
+        $response = $this->httpClient->get('users')['data'];
+
         return array_map(
-            static fn(array $user) => User::fromArray($user),
-            $this->httpClient->get('users')['data']
+            static fn(array $userData) => User::fromArray($userData)->setOriginalResponse($userData),
+            $response
         );
     }
 
@@ -24,8 +26,18 @@ class Users extends Api
      */
     public function getUser(string $userId): User
     {
-        $user = $this->httpClient->get("users/$userId");
+        $response = $this->httpClient->get("users/$userId");
 
-        return User::fromArray($user['data']);
+        return User::fromArray($response['data'])->setOriginalResponse($response);
+    }
+
+    /**
+     * @throws RelesysHttpClientException
+     */
+    public function createUser(User $user): User
+    {
+        $response = $this->httpClient->post('users', $user->toArray());
+
+        return User::fromArray($response['data'])->setOriginalResponse($response);
     }
 }

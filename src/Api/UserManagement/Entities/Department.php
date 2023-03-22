@@ -2,7 +2,9 @@
 
 namespace Getsno\Relesys\Api\UserManagement\Entities;
 
-class Department
+use Getsno\Relesys\Api\ApiEntity;
+
+class Department extends ApiEntity
 {
 
 }
