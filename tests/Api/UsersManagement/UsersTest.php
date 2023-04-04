@@ -2,6 +2,7 @@
 
 namespace Getsno\Relesys\Tests\Api\UsersManagement;
 
+use Carbon\Carbon;
 use Mockery\MockInterface;
 use Getsno\Relesys\Tests\TestCase;
 use Getsno\Relesys\Api\UserManagement\Users;
@@ -9,10 +10,12 @@ use Getsno\Relesys\Facades\RelesysFacade as Relesys;
 use Getsno\Relesys\Api\UserManagement\Entities\User;
 use Getsno\Relesys\Api\UserManagement\Enums\UserStatus;
 use Getsno\Relesys\Exceptions\RelesysHttpClientException;
+use Getsno\Relesys\Api\UserManagement\ValueObjects\PhoneNumber;
+use Getsno\Relesys\Api\UserManagement\Entities\Patches\UserPatch;
 use Getsno\Relesys\Api\UserManagement\Enums\PasswordResetLinkDeliveryMethod;
 
-use function Getsno\Relesys\Tests\getUsersResponse;
 use function Getsno\Relesys\Tests\getUserResponse;
+use function Getsno\Relesys\Tests\getUsersResponse;
 use function Getsno\Relesys\Tests\createUserResponse;
 
 class UsersTest extends TestCase
@@ -29,16 +32,21 @@ class UsersTest extends TestCase
      */
     public function testGetUser(): void
     {
-        $this->mockFacadeIfTestingInIsolation('users', static function (MockInterface $mock) {
-            $mock->shouldReceive('get')
-                ->once()
-                ->with('users/123')
-                ->andReturn(getUserResponse('123'));
-        });
+        $testUserId = fake()->uuid;
 
-        $user = Relesys::users()->getUser('123');
+        $this->mockFacadeIfTestingInIsolation(
+            'users',
+            static function (MockInterface $mock) use ($testUserId) {
+                $mock->shouldReceive('get')
+                    ->once()
+                    ->with("users/$testUserId")
+                    ->andReturn(getUserResponse($testUserId));
+            }
+        );
 
-        $this->assertEquals('123', $user->id);
+        $user = Relesys::users()->getUser($testUserId);
+
+        $this->assertEquals($testUserId, $user->id);
         $this->assertEquals(UserStatus::ACTIVATED->value, $user->status->value);
     }
 
@@ -76,7 +84,7 @@ class UsersTest extends TestCase
 
         $user = User::fromArray([
             'name'                => 'Anton',
-            'primaryDepartmentId' => '123',
+            'primaryDepartmentId' => fake()->uuid,
             'phoneNumber'         => [
                 'countryCode' => 47,
                 'number'      => '1111111',
@@ -102,15 +110,91 @@ class UsersTest extends TestCase
             $mock->shouldReceive('post')
                 ->once()
                 ->withArgs(static function (string $path) {
-                    return (bool) preg_match('/^users\/\w+\/passwordresetlink$/', $path);
+                    return (bool) preg_match('/^users\/[a-zA-Z0-9_-]+\/passwordresetlink$/', $path);
                 })
                 ->andReturnNull();
         });
 
         Relesys::users()->sendPasswordResetLink(
-            '123',
+            fake()->uuid,
             PasswordResetLinkDeliveryMethod::EMAIL,
             true
         );
+    }
+
+    /**
+     * @throws RelesysHttpClientException
+     */
+    public function testSendSms(): void
+    {
+        $this->mockFacadeIfTestingInIsolation('users', function (MockInterface $mock) {
+            $mock->shouldReceive('post')
+                ->once()
+                ->withArgs(static function (string $path) {
+                    return (bool) preg_match('/^users\/[a-zA-Z0-9_-]+\/sms$/', $path);
+                })
+                ->andReturnNull();
+        });
+
+        Relesys::users()->sendSms(
+            fake()->uuid,
+            'Test SMS message'
+        );
+    }
+
+    /**
+     * @throws RelesysHttpClientException
+     */
+    public function testUpdateUser(): void
+    {
+        $this->mockFacadeIfTestingInIsolation('users', function (MockInterface $mock) {
+            $mock->shouldReceive('patch')
+                ->once()
+                ->withArgs(static fn(string $path, array $params) => true)
+                ->andReturnUsing(static fn() => createUserResponse(User::fromArray(['title' => 'Cyber god'])));
+        });
+
+        $userPatch = (new UserPatch())
+            ->title('Cyber god')
+            ->birthDate(Carbon::parse('05-02-1991'))
+            ->secondaryPhoneNumber(PhoneNumber::fromArray(['countryCode' => 47, 'number' => 777777]));
+        $user = Relesys::users()->updateUser(fake()->uuid, $userPatch);
+
+        $this->assertEquals('Cyber god', $user->title);
+    }
+
+    /**
+     * @throws RelesysHttpClientException
+     */
+    public function testChangeUserStatus(): void
+    {
+        $this->mockFacadeIfTestingInIsolation('users', function (MockInterface $mock) {
+            $mock->shouldReceive('put')
+                ->once()
+                ->withArgs(static function (string $path) {
+                    return (bool) preg_match('/^users\/[a-zA-Z0-9_-]+\/status$/', $path);
+                })
+                ->andReturnNull();
+        });
+
+        Relesys::users()->changeUserStatus(
+            fake()->uuid,
+            UserStatus::ACTIVATED
+        );
+    }
+
+    /**
+     * @throws RelesysHttpClientException
+     */
+    public function testDeleteUser(): void
+    {
+        $this->mockFacadeIfTestingInIsolation('users', function (MockInterface $mock) {
+            $mock->shouldReceive('delete')
+                ->once()
+                ->withArgs(static fn(string $path) => (bool) preg_match('/^users\/[a-zA-Z0-9_-]+$/', $path))
+                ->andReturnNull();
+        });
+
+        Relesys::users()->deleteUser(fake()->uuid);
     }
 }

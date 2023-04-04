@@ -6,6 +6,8 @@ use Mockery;
 use Getsno\Relesys\HttpClient\HttpClient;
 use Getsno\Relesys\RelesysServiceProvider;
 use Getsno\Relesys\Api\UserManagement\Users;
+use Getsno\Relesys\Api\UserManagement\UserGroups;
+use Getsno\Relesys\Api\UserManagement\Departments;
 use Getsno\Relesys\Facades\RelesysFacade as Relesys;
 
 class TestCase extends \Orchestra\Testbench\TestCase
@@ -42,11 +44,19 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function mockFacadeIfTestingInIsolation(string $apiType, ?callable $mockCallback = null): void
     {
-        $relesysHttpClientMock = $this->mock(HttpClient::class, $mockCallback);
-        $usersApiMock = Mockery::mock(Users::class, [$relesysHttpClientMock])->makePartial();
+        if ($this->isTestingInIsolation()) {
+            $relesysHttpClientMock = $this->mock(HttpClient::class, $mockCallback);
 
-        Relesys::shouldReceive($apiType)
-            ->once()
-            ->andReturn($usersApiMock);
+            $target = match ($apiType) {
+                'users'       => Users::class,
+                'departments' => Departments::class,
+                'userGroups'  => UserGroups::class,
+            };
+            $apiMock = Mockery::mock($target, [$relesysHttpClientMock])->makePartial();
+
+            Relesys::shouldReceive($apiType)
+                ->once()
+                ->andReturn($apiMock);
+        }
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Getsno\Relesys\Traits;
 
+use UnitEnum;
+
 trait ConvertibleToArray
 {
     public function toArray(): array
@@ -11,6 +13,11 @@ trait ConvertibleToArray
         $toArrayIfObject = static function (mixed $value) {
             if (is_object($value) && method_exists($value, 'toArray')) {
                 return $value->toArray();
+            }
+
+            // get value/name if instance of enum
+            if ($value instanceof UnitEnum) {
+                return property_exists($value, 'value') ? $value->value : $value->name;
             }
 
             return $value;
