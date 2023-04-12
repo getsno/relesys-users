@@ -3,6 +3,7 @@
 namespace Getsno\Relesys\Api\UserManagement;
 
 use Getsno\Relesys\Api\Api;
+use Getsno\Relesys\Api\ApiQueryParams;
 use Getsno\Relesys\Api\UserManagement\Entities\User;
 use Getsno\Relesys\Api\UserManagement\Enums\UserStatus;
 use Getsno\Relesys\Exceptions\RelesysHttpClientException;
@@ -24,13 +25,15 @@ class Users extends Api
     /**
      * @throws RelesysHttpClientException
      */
-    public function getUsers(): array
+    public function getUsers(ApiQueryParams $queryParams = new ApiQueryParams(), int $page = 1): array
     {
-        $responseData = $this->httpClient->get('users')['data'];
+        $queryParams->offset($queryParams->getLimit() * ($page - 1));
+        $params = $queryParams->toArray();
+        $responseData = $this->httpClient->get('users', $params);
 
         return array_map(
             static fn(array $user) => User::fromArray($user)->setSource($user),
-            $responseData
+            $responseData['data']
         );
     }
 

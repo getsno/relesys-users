@@ -5,6 +5,7 @@ namespace Getsno\Relesys\Tests\Api\UsersManagement;
 use Carbon\Carbon;
 use Mockery\MockInterface;
 use Getsno\Relesys\Tests\TestCase;
+use Getsno\Relesys\Api\ApiQueryParams;
 use Getsno\Relesys\Api\UserManagement\Users;
 use Getsno\Relesys\Facades\RelesysFacade as Relesys;
 use Getsno\Relesys\Api\UserManagement\Entities\User;
@@ -58,11 +59,15 @@ class UsersTest extends TestCase
         $this->mockFacadeIfTestingInIsolation('users', function (MockInterface $mock) {
             $mock->shouldReceive('get')
                 ->once()
-                ->with('users')
+                ->withArgs(static fn(string $path, array $params) => $path === 'users')
                 ->andReturn(getUsersResponse(3));
         });
 
-        $users = Relesys::users()->getUsers();
+        $queryParams = (new ApiQueryParams)
+            ->addFilter('email', 'knut@gets.no')
+            ->sortBy('name')
+            ->limit(100);
+        $users = Relesys::users()->getUsers($queryParams);
 
         $this->assertIsArray($users);
         $this->assertContainsOnlyInstancesOf(User::class, $users);
@@ -87,7 +92,7 @@ class UsersTest extends TestCase
             'primaryDepartmentId' => fake()->uuid,
             'phoneNumber'         => [
                 'countryCode' => 47,
-                'number'      => '1111111',
+                'number'      => '46700524',
             ],
             'userGroups'          => [
                 [

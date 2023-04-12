@@ -15,7 +15,7 @@ abstract class ApiEntity
      */
     public readonly array $source;
 
-    public function setSource(array $source): self
+    public function setSource(array $source): static
     {
         $this->source = $source;
 

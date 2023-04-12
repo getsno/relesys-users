@@ -1,8 +1,6 @@
 <?php
 
-namespace Getsno\Relesys\Api\UserManagement;
-
-use Getsno\Relesys\Api\PatchOperation;
+namespace Getsno\Relesys\Api;
 
 class ApiEntityPatch
 {

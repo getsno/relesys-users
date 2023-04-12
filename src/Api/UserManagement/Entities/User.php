@@ -21,7 +21,7 @@ class User extends ApiEntity
     /**
      * @var CustomField[]
      */
-    public array $customFields = [];
+    public array $customFields;
     public ?string $dataSource;
     public ?string $departmentUrl;
     public ?string $email;
@@ -53,6 +53,8 @@ class User extends ApiEntity
 
     protected function setCustomFields(array $customFields): void
     {
+        $this->customFields = [];
+
         foreach ($customFields as $customField) {
             $this->customFields[] = CustomField::fromArray($customField);
         }

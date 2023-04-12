@@ -4,7 +4,7 @@ namespace Getsno\Relesys\Api\UserManagement\Entities\Patches;
 
 use Carbon\Carbon;
 use Getsno\Relesys\Api\PatchOperation;
-use Getsno\Relesys\Api\UserManagement\ApiEntityPatch;
+use Getsno\Relesys\Api\ApiEntityPatch;
 use Getsno\Relesys\Api\UserManagement\ValueObjects\UserGroup;
 use Getsno\Relesys\Api\UserManagement\ValueObjects\PhoneNumber;
 use Getsno\Relesys\Api\UserManagement\ValueObjects\AdditionalDepartment;

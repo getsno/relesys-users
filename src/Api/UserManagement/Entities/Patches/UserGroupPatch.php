@@ -3,7 +3,7 @@
 namespace Getsno\Relesys\Api\UserManagement\Entities\Patches;
 
 use Getsno\Relesys\Api\PatchOperation;
-use Getsno\Relesys\Api\UserManagement\ApiEntityPatch;
+use Getsno\Relesys\Api\ApiEntityPatch;
 
 class UserGroupPatch extends ApiEntityPatch
 {
