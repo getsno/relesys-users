@@ -3,6 +3,9 @@
 namespace Getsno\Relesys\Api\UserManagement;
 
 use Getsno\Relesys\Api\Api;
+use Getsno\Relesys\Api\BatchResponse;
+use Getsno\Relesys\Api\ApiQueryParams;
+use Getsno\Relesys\Api\UserManagement\Entities\User;
 use Getsno\Relesys\Exceptions\RelesysHttpClientException;
 use Getsno\Relesys\Api\UserManagement\Entities\Department;
 use Getsno\Relesys\Api\UserManagement\Entities\Patches\DepartmentPatch;
@@ -22,13 +25,23 @@ class Departments extends Api
     /**
      * @throws RelesysHttpClientException
      */
-    public function getDepartments(): array
+    public function getDepartments(ApiQueryParams $queryParams = new ApiQueryParams(), int $page = 1): BatchResponse
     {
-        $responseData = $this->httpClient->get('departments')['data'];
+        $queryParams->offset($queryParams->getLimit() * ($page - 1));
+        $params = $queryParams->toArray();
 
-        return array_map(
+        $response = $this->httpClient->get('departments', $params);
+
+        $departments = array_map(
             static fn(array $department) => Department::fromArray($department)->setSource($department),
-            $responseData
+            $response['data']
+        );
+
+        return new BatchResponse(
+            $response['count'],
+            $departments,
+            $response['nextUrl'] ?? null,
+            $response['previousUrl'] ?? null,
         );
     }
 

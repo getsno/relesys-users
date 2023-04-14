@@ -3,6 +3,7 @@
 namespace Getsno\Relesys\Api\UserManagement;
 
 use Getsno\Relesys\Api\Api;
+use Getsno\Relesys\Api\BatchResponse;
 use Getsno\Relesys\Api\ApiQueryParams;
 use Getsno\Relesys\Api\UserManagement\Entities\User;
 use Getsno\Relesys\Api\UserManagement\Enums\UserStatus;
@@ -25,15 +26,23 @@ class Users extends Api
     /**
      * @throws RelesysHttpClientException
      */
-    public function getUsers(ApiQueryParams $queryParams = new ApiQueryParams(), int $page = 1): array
+    public function getUsers(ApiQueryParams $queryParams = new ApiQueryParams(), int $page = 1): BatchResponse
     {
         $queryParams->offset($queryParams->getLimit() * ($page - 1));
         $params = $queryParams->toArray();
-        $responseData = $this->httpClient->get('users', $params);
 
-        return array_map(
+        $response = $this->httpClient->get('users', $params);
+
+        $users = array_map(
             static fn(array $user) => User::fromArray($user)->setSource($user),
-            $responseData['data']
+            $response['data']
+        );
+
+        return new BatchResponse(
+            $response['count'],
+            $users,
+            $response['nextUrl'] ?? null,
+            $response['previousUrl'] ?? null,
         );
     }
 

@@ -64,13 +64,12 @@ class UsersTest extends TestCase
         });
 
         $queryParams = (new ApiQueryParams)
-            ->addFilter('email', 'knut@gets.no')
             ->sortBy('name')
-            ->limit(100);
-        $users = Relesys::users()->getUsers($queryParams);
+            ->limit(5);
+        $response = Relesys::users()->getUsers($queryParams, 2);
 
-        $this->assertIsArray($users);
-        $this->assertContainsOnlyInstancesOf(User::class, $users);
+        $this->assertIsInt($response->count);
+        $this->assertContainsOnlyInstancesOf(User::class, $response->data);
     }
 
     /**

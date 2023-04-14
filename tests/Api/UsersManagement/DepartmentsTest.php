@@ -4,6 +4,7 @@ namespace Getsno\Relesys\Tests\Api\UsersManagement;
 
 use Mockery\MockInterface;
 use Getsno\Relesys\Tests\TestCase;
+use Getsno\Relesys\Api\ApiQueryParams;
 use Getsno\Relesys\Api\UserManagement\Departments;
 use Getsno\Relesys\Facades\RelesysFacade as Relesys;
 use Getsno\Relesys\Exceptions\RelesysHttpClientException;
@@ -12,7 +13,7 @@ use Getsno\Relesys\Api\UserManagement\Enums\DepartmentType;
 use Getsno\Relesys\Api\UserManagement\ValueObjects\PhoneNumber;
 use Getsno\Relesys\Api\UserManagement\Entities\Patches\DepartmentPatch;
 
-use function Getsno\Relesys\Tests\getUsersResponse;
+use function Getsno\Relesys\Tests\getDepartmentsResponse;
 use function Getsno\Relesys\Tests\getDepartmentResponse;
 use function Getsno\Relesys\Tests\createDepartmentResponse;
 
@@ -55,14 +56,17 @@ class DepartmentsTest extends TestCase
         $this->mockFacadeIfTestingInIsolation('departments', function (MockInterface $mock) {
             $mock->shouldReceive('get')
                 ->once()
-                ->with('departments')
-                ->andReturn(getUsersResponse(3));
+                ->withArgs(static fn(string $path, array $params) => $path === 'departments')
+                ->andReturn(getDepartmentsResponse(3));
         });
 
-        $departments = Relesys::departments()->getDepartments();
+        $queryParams = (new ApiQueryParams)
+            ->sortBy('name')
+            ->limit(5);
+        $response = Relesys::departments()->getDepartments($queryParams, 2);
 
-        $this->assertIsArray($departments);
-        $this->assertContainsOnlyInstancesOf(Department::class, $departments);
+        $this->assertIsInt($response->count);
+        $this->assertContainsOnlyInstancesOf(Department::class, $response->data);
     }
 
     /**

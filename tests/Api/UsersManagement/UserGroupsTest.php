@@ -4,6 +4,8 @@ namespace Getsno\Relesys\Tests\Api\UsersManagement;
 
 use Mockery\MockInterface;
 use Getsno\Relesys\Tests\TestCase;
+use Getsno\Relesys\Api\BatchResponse;
+use Getsno\Relesys\Api\ApiQueryParams;
 use Getsno\Relesys\Api\UserManagement\UserGroups;
 use Getsno\Relesys\Facades\RelesysFacade as Relesys;
 use Getsno\Relesys\Exceptions\RelesysHttpClientException;
@@ -53,14 +55,17 @@ class UserGroupsTest extends TestCase
         $this->mockFacadeIfTestingInIsolation('userGroups', function (MockInterface $mock) {
             $mock->shouldReceive('get')
                 ->once()
-                ->with('userGroups')
+                ->withArgs(static fn(string $path, array $params) => $path === 'userGroups')
                 ->andReturn(getUserGroupsResponse(3));
         });
 
-        $userGroups = Relesys::userGroups()->getUserGroups();
+        $queryParams = (new ApiQueryParams)
+            ->sortBy('name')
+            ->limit(5);
+        $response = Relesys::userGroups()->getUserGroups($queryParams, 2);
 
-        $this->assertIsArray($userGroups);
-        $this->assertContainsOnlyInstancesOf(UserGroup::class, $userGroups);
+        $this->assertIsInt($response->count);
+        $this->assertContainsOnlyInstancesOf(UserGroup::class, $response->data);
     }
 
     /**

@@ -3,6 +3,9 @@
 namespace Getsno\Relesys\Api\UserManagement;
 
 use Getsno\Relesys\Api\Api;
+use Getsno\Relesys\Api\BatchResponse;
+use Getsno\Relesys\Api\ApiQueryParams;
+use Getsno\Relesys\Api\UserManagement\Entities\User;
 use Getsno\Relesys\Exceptions\RelesysHttpClientException;
 use Getsno\Relesys\Api\UserManagement\Entities\UserGroup;
 use Getsno\Relesys\Api\UserManagement\Entities\Patches\UserGroupPatch;
@@ -22,13 +25,23 @@ class UserGroups extends Api
     /**
      * @throws RelesysHttpClientException
      */
-    public function getUserGroups(): array
+    public function getUserGroups(ApiQueryParams $queryParams = new ApiQueryParams(), int $page = 1): BatchResponse
     {
-        $responseData = $this->httpClient->get('userGroups')['data'];
+        $queryParams->offset($queryParams->getLimit() * ($page - 1));
+        $params = $queryParams->toArray();
 
-        return array_map(
+        $response = $this->httpClient->get('userGroups', $params);
+
+        $userGroups = array_map(
             static fn(array $userGroup) => UserGroup::fromArray($userGroup)->setSource($userGroup),
-            $responseData
+            $response['data']
+        );
+
+        return new BatchResponse(
+            $response['count'],
+            $userGroups,
+            $response['nextUrl'] ?? null,
+            $response['previousUrl'] ?? null,
         );
     }
 
