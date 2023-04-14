@@ -4,7 +4,6 @@ namespace Getsno\Relesys\Tests\Api\UsersManagement;
 
 use Mockery\MockInterface;
 use Getsno\Relesys\Tests\TestCase;
-use Getsno\Relesys\Api\BatchResponse;
 use Getsno\Relesys\Api\ApiQueryParams;
 use Getsno\Relesys\Api\UserManagement\UserGroups;
 use Getsno\Relesys\Facades\RelesysFacade as Relesys;
