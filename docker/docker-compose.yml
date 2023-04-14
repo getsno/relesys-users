@@ -1,0 +1,13 @@
+services:
+  php:
+    container_name: relesys
+    hostname: relesys
+    image: relesys
+    build: .
+    user: ${UID}:${GID}
+    volumes:
+      - ./.cache:/tmp
+      - ../:/relesys
+    environment:
+      PROJECT_PATH: ${PROJECT_PATH}
+    working_dir: /relesys

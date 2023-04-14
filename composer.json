@@ -1,13 +1,15 @@
 {
-    "name": "getsno/relesys",
-    "description": "Laravel wrapper package for the Relesys API",
+    "name": "getsno/relesys-users",
+    "description": "Relesys User Management API client for Laravel",
     "keywords": [
         "getsno",
         "relesys",
         "relesys-laravel",
-        "relesys-api"
+        "relesys-api",
+        "relesys-users",
+        "laravel-package"
     ],
-    "homepage": "https://github.com/getsno/relesys",
+    "homepage": "https://github.com/getsno/relesys-users",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -19,11 +21,12 @@
     ],
     "require": {
         "php": "^8.1",
-        "illuminate/support": "^8.0"
+        "guzzlehttp/guzzle": "^7.5",
+        "illuminate/support": "^10.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^6.0",
-        "phpunit/phpunit": "^9.0"
+        "orchestra/testbench": "^8.0",
+        "phpunit/phpunit": "^10.0"
     },
     "autoload": {
         "psr-4": {
@@ -33,7 +36,10 @@
     "autoload-dev": {
         "psr-4": {
             "Getsno\\Relesys\\Tests\\": "tests"
-        }
+        },
+        "files": [
+          "tests/FakeResponses.php"
+        ]
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
@@ -45,10 +51,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Getsno\\Relesys\\RelesysServiceProvider"
+              "RelesyServiceProvider"
             ],
             "aliases": {
-                "Relesys": "Getsno\\Relesys\\RelesysFacade"
+                "Relesys": "RelesysFacade"
             }
         }
     }
