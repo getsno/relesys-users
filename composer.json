@@ -1,12 +1,13 @@
 {
     "name": "getsno/relesys-users",
-    "description": "Laravel wrapper package for the Relesys User Management API",
+    "description": "Relesys User Management API client for Laravel",
     "keywords": [
         "getsno",
         "relesys",
         "relesys-laravel",
         "relesys-api",
-        "relesys-users"
+        "relesys-users",
+        "laravel-package"
     ],
     "homepage": "https://github.com/getsno/relesys-users",
     "license": "MIT",
