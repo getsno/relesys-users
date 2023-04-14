@@ -171,3 +171,27 @@ function createUserGroupResponse(UserGroup $userGroup): array
         'data' => $userGroup->toArray(),
     ];
 }
+
+/** CustomFields */
+function getCustomFieldsResponse(int $amount): array
+{
+    $customFields = [
+        'count' => $amount,
+        'data'  => [],
+    ];
+
+    $customFieldResponse = [
+        'data' => [
+            'id'         => fake()->uuid,
+            'externalId' => fake()->word,
+            'name'       => fake()->word,
+            'type'       => 'MultilineText',
+        ],
+    ];
+
+    while (count($customFields['data']) < $amount) {
+        $customFields['data'][] = $customFieldResponse['data'];
+    }
+
+    return $customFields;
+}

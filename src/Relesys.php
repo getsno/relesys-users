@@ -6,6 +6,7 @@ use Getsno\Relesys\Api\UserManagement\Users;
 use Getsno\Relesys\HttpClient\HttpClient;
 use Getsno\Relesys\Api\UserManagement\UserGroups;
 use Getsno\Relesys\Api\UserManagement\Departments;
+use Getsno\Relesys\Api\UserManagement\CustomFields;
 
 class Relesys
 {
@@ -28,5 +29,10 @@ class Relesys
     public function users(): Users
     {
         return new Users($this->httpClient);
+    }
+
+    public function customFields(): CustomFields
+    {
+        return new CustomFields($this->httpClient);
     }
 }
