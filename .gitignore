@@ -3,6 +3,5 @@
 /.phpunit.cache
 /vendor
 
-/composer.lock
 /docker/.env
 /phpunit.xml
