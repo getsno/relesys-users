@@ -51,10 +51,10 @@
     "extra": {
         "laravel": {
             "providers": [
-              "RelesysServiceProvider"
+              "Getsno\\Relesys\\RelesysServiceProvider"
             ],
             "aliases": {
-                "Relesys": "RelesysFacade"
+                "Relesys": "Getsno\\Relesys\\Facades\\RelesysFacade"
             }
         }
     }
