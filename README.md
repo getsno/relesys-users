@@ -1,7 +1,7 @@
 # Relesys User Management API client for Laravel
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/getsno/relesys-api.svg?style=flat-square)](https://packagist.org/packages/getsno/relesys-users)
-[![Total Downloads](https://img.shields.io/packagist/dt/getsno/relesys-api.svg?style=flat-square)](https://packagist.org/packages/getsno/relesys-users)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/getsno/relesys-users.svg?style=flat-square)](https://packagist.org/packages/getsno/relesys-users)
+[![Total Downloads](https://img.shields.io/packagist/dt/getsno/relesys-users.svg?style=flat-square)](https://packagist.org/packages/getsno/relesys-users)
 [![Made in Ukraine](https://img.shields.io/badge/made_in-ukraine-ffd700.svg?labelColor=0057b7)](https://stand-with-ukraine.pp.ua)
 
 This Laravel package provides a simple and crisp way to access the [Relesys](https://api.relesysapp.net/docs/v1.1/intro) User Management API endpoints, query data and update existing entries.
