@@ -7,14 +7,14 @@ use Getsno\Relesys\Api\ApiEntityPatch;
 
 class UserGroupPatch extends ApiEntityPatch
 {
-    public function description(string $description): self
+    public function description(?string $description): self
     {
         $this->addOperation(PatchOperation::REPLACE, '/description', $description);
 
         return $this;
     }
 
-    public function externalId(string $externalId): self
+    public function externalId(?string $externalId): self
     {
         $this->addOperation(PatchOperation::REPLACE, '/externalId', $externalId);
 

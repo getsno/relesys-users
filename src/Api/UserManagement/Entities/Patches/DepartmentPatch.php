@@ -9,21 +9,21 @@ use Getsno\Relesys\Api\UserManagement\ValueObjects\PhoneNumber;
 
 class DepartmentPatch extends ApiEntityPatch
 {
-    public function addressLine(string $addressLine): self
+    public function addressLine(?string $addressLine): self
     {
         $this->addOperation(PatchOperation::REPLACE, '/addressLine', $addressLine);
 
         return $this;
     }
 
-    public function addressLine2(string $addressLine2): self
+    public function addressLine2(?string $addressLine2): self
     {
         $this->addOperation(PatchOperation::REPLACE, '/addressLine2', $addressLine2);
 
         return $this;
     }
 
-    public function city(string $city): self
+    public function city(?string $city): self
     {
         $this->addOperation(PatchOperation::REPLACE, '/city', $city);
 
@@ -37,14 +37,14 @@ class DepartmentPatch extends ApiEntityPatch
         return $this;
     }
 
-    public function externalId(string $externalId): self
+    public function externalId(?string $externalId): self
     {
         $this->addOperation(PatchOperation::REPLACE, '/externalId', $externalId);
 
         return $this;
     }
 
-    public function managerUserId(string $managerUserId): self
+    public function managerUserId(?string $managerUserId): self
     {
         $this->addOperation(PatchOperation::REPLACE, '/managerUserId', $managerUserId);
 
@@ -58,7 +58,7 @@ class DepartmentPatch extends ApiEntityPatch
         return $this;
     }
 
-    public function parentId(string $parentId): self
+    public function parentId(?string $parentId): self
     {
         $this->addOperation(PatchOperation::REPLACE, '/parentId', $parentId);
 
@@ -111,7 +111,7 @@ class DepartmentPatch extends ApiEntityPatch
         return $this;
     }
 
-    public function zipCode(string $zipCode): self
+    public function zipCode(?string $zipCode): self
     {
         $this->addOperation(PatchOperation::REPLACE, '/zipCode', $zipCode);
 
