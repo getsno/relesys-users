@@ -11,7 +11,7 @@ use Getsno\Relesys\Api\UserManagement\ValueObjects\AdditionalDepartment;
 
 class UserPatch extends ApiEntityPatch
 {
-    public function externalId(string $externalId): self
+    public function externalId(?string $externalId): self
     {
         $this->addOperation(PatchOperation::REPLACE, '/externalId', $externalId);
 
@@ -25,28 +25,28 @@ class UserPatch extends ApiEntityPatch
         return $this;
     }
 
-    public function title(string $title): self
+    public function title(?string $title): self
     {
         $this->addOperation(PatchOperation::REPLACE, '/title', $title);
 
         return $this;
     }
 
-    public function dataSource(string $dataSource): self
+    public function dataSource(?string $dataSource): self
     {
         $this->addOperation(PatchOperation::REPLACE, '/dataSource', $dataSource);
 
         return $this;
     }
 
-    public function email(string $email): self
+    public function email(?string $email): self
     {
         $this->addOperation(PatchOperation::REPLACE, '/email', $email);
 
         return $this;
     }
 
-    public function secondaryEmail(string $secondaryEmail): self
+    public function secondaryEmail(?string $secondaryEmail): self
     {
         $this->addOperation(PatchOperation::REPLACE, '/secondaryEmail', $secondaryEmail);
 
@@ -75,12 +75,12 @@ class UserPatch extends ApiEntityPatch
         return $this;
     }
 
-    public function birthDate(Carbon $birthDate): self
+    public function birthDate(?Carbon $birthDate): self
     {
         $this->addOperation(
             PatchOperation::REPLACE,
             '/birthDate',
-            $birthDate->format('m-d-Y')
+            $birthDate?->format('m-d-Y')
         );
 
         return $this;
@@ -93,23 +93,23 @@ class UserPatch extends ApiEntityPatch
         return $this;
     }
 
-    public function employmentDate(Carbon $employmentDate): self
+    public function employmentDate(?Carbon $employmentDate): self
     {
         $this->addOperation(
             PatchOperation::REPLACE,
             '/employmentDate',
-            $employmentDate->format('m-d-Y')
+            $employmentDate?->format('m-d-Y')
         );
 
         return $this;
     }
 
-    public function employmentEndDate(Carbon $employmentEndDate): self
+    public function employmentEndDate(?Carbon $employmentEndDate): self
     {
         $this->addOperation(
             PatchOperation::REPLACE,
             '/employmentEndDate',
-            $employmentEndDate->format('m-d-Y')
+            $employmentEndDate?->format('m-d-Y')
         );
 
         return $this;
