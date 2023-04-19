@@ -140,7 +140,7 @@ class UserPatch extends ApiEntityPatch
     {
         $this->addOperation(
             PatchOperation::ADD,
-            '/additionalDepartments/-',
+            '/userGroups/-',
             $userGroup->toArray()
         );
 
