@@ -121,7 +121,7 @@ composer test
 
 ### Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+Please see [RELEASES](https://github.com/getsno/relesys-users/releases) for more information what has changed recently.
 
 ### Credits
 
