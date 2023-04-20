@@ -3,6 +3,7 @@
 namespace Getsno\Relesys\Traits;
 
 use UnitEnum;
+use Carbon\Carbon;
 
 trait ConvertibleToArray
 {
@@ -10,7 +11,12 @@ trait ConvertibleToArray
     {
         $properties = get_object_vars($this);
 
-        $toArrayIfObject = static function (mixed $value) {
+        $toPrimitiveIfObject = static function (mixed $value): mixed {
+            // get formatted datetime value
+            if ($value instanceof Carbon) {
+                return $value->format('m-d-Y');
+            }
+
             if (is_object($value) && method_exists($value, 'toArray')) {
                 return $value->toArray();
             }
@@ -26,9 +32,9 @@ trait ConvertibleToArray
         $result = [];
         foreach ($properties as $property => $value) {
             if (is_array($value)) {
-                $result[$property] = array_map(static fn(mixed $item) => $toArrayIfObject($item), $value);
+                $result[$property] = array_map(static fn(mixed $item) => $toPrimitiveIfObject($item), $value);
             } else {
-                $result[$property] = $toArrayIfObject($value);
+                $result[$property] = $toPrimitiveIfObject($value);
             }
         }
 
