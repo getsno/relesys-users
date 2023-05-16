@@ -32,6 +32,7 @@ The package interface is very similar to documentation sections (`customFields`,
 method names are the same as endpoint names.
 
 #### Examples
+
 ```php
 use \Relesys;
 use \Getsno\Relesys\Api\UserManagement\Entities\User;
@@ -64,11 +65,11 @@ $newUser = Relesys::users()->createUser($newUser);
 $user = Relesys::users()->getUser('1cb8e33e-32d6-4353-9b15-93115d96580a');
 
 // change user status
-Relesys::users()->changeUserStatus(UserStatus::DISABLED);
+Relesys::users()->changeUserStatus(UserStatus::Disabled);
 
 // get users (with filtering, sorting and pagination)
 $queryParams = (new ApiQueryParams)
-    ->addFilter('status', UserStatus::ACTIVATED->value)
+    ->addFilter('status', UserStatus::Activated->value)
     ->sortBy('name')
     ->limit(10);
 $usersBatchResponse = Relesys::users()->getUsers(queryParams: $queryParams, page: 2);

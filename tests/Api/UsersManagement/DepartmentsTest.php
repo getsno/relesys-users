@@ -85,12 +85,12 @@ class DepartmentsTest extends TestCase
 
         $department = Department::fromArray([
             'name' => 'Test department',
-            'type' => DepartmentType::DEPARTMENT->value,
+            'type' => DepartmentType::Department->value,
         ]);
         $newDepartment = Relesys::departments()->createDepartment($department);
 
         $this->assertEquals('Test department', $newDepartment->name);
-        $this->assertEquals(DepartmentType::DEPARTMENT, $newDepartment->type);
+        $this->assertEquals(DepartmentType::Department, $newDepartment->type);
     }
 
     /**

@@ -48,7 +48,7 @@ class UsersTest extends TestCase
         $user = Relesys::users()->getUser($testUserId);
 
         $this->assertEquals($testUserId, $user->id);
-        $this->assertEquals(UserStatus::ACTIVATED->value, $user->status->value);
+        $this->assertEquals(UserStatus::Activated->value, $user->status->value);
     }
 
     /**
@@ -121,7 +121,7 @@ class UsersTest extends TestCase
 
         Relesys::users()->sendPasswordResetLink(
             fake()->uuid,
-            PasswordResetLinkDeliveryMethod::EMAIL,
+            PasswordResetLinkDeliveryMethod::Email,
             true
         );
     }
@@ -183,7 +183,7 @@ class UsersTest extends TestCase
 
         Relesys::users()->changeUserStatus(
             fake()->uuid,
-            UserStatus::ACTIVATED
+            UserStatus::Activated
         );
     }
 

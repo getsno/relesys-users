@@ -61,7 +61,7 @@ class Users extends Api
      */
     public function sendPasswordResetLink(
         string $userId,
-        PasswordResetLinkDeliveryMethod $deliveryMethod = PasswordResetLinkDeliveryMethod::PHONE,
+        PasswordResetLinkDeliveryMethod $deliveryMethod = PasswordResetLinkDeliveryMethod::Phone,
         bool $resetLoginCode = false
     ): void
     {
