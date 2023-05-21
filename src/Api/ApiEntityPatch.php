@@ -10,17 +10,16 @@ class ApiEntityPatch
         PatchOperation $operation,
         string $path,
         string|array|null $value = null
-    ): void
-    {
+    ): void {
         $newPatchOperation = [
             'op'    => $operation->value,
             'path'  => $path,
         ];
 
         if (in_array($operation, [
-            PatchOperation::ADD,
-            PatchOperation::REPLACE,
-            PatchOperation::TEST
+            PatchOperation::Add,
+            PatchOperation::Replace,
+            PatchOperation::Test
         ],true)) {
             $newPatchOperation['value'] = $value;
         }

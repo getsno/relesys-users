@@ -5,7 +5,6 @@ namespace Getsno\Relesys\Api\UserManagement;
 use Getsno\Relesys\Api\Api;
 use Getsno\Relesys\Api\BatchResponse;
 use Getsno\Relesys\Api\ApiQueryParams;
-use Getsno\Relesys\Api\UserManagement\Entities\User;
 use Getsno\Relesys\Exceptions\RelesysHttpClientException;
 use Getsno\Relesys\Api\UserManagement\Entities\UserGroup;
 use Getsno\Relesys\Api\UserManagement\Entities\Patches\UserGroupPatch;

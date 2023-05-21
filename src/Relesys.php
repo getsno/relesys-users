@@ -12,9 +12,7 @@ class Relesys
 {
     public function __construct(
         protected readonly HttpClient $httpClient,
-    )
-    {
-    }
+    ) {}
 
     public function departments(): Departments
     {

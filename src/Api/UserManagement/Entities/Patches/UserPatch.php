@@ -13,42 +13,42 @@ class UserPatch extends ApiEntityPatch
 {
     public function externalId(?string $externalId): self
     {
-        $this->addOperation(PatchOperation::REPLACE, '/externalId', $externalId);
+        $this->addOperation(PatchOperation::Replace, '/externalId', $externalId);
 
         return $this;
     }
 
     public function name(string $name): self
     {
-        $this->addOperation(PatchOperation::REPLACE, '/name', $name);
+        $this->addOperation(PatchOperation::Replace, '/name', $name);
 
         return $this;
     }
 
     public function title(?string $title): self
     {
-        $this->addOperation(PatchOperation::REPLACE, '/title', $title);
+        $this->addOperation(PatchOperation::Replace, '/title', $title);
 
         return $this;
     }
 
     public function dataSource(?string $dataSource): self
     {
-        $this->addOperation(PatchOperation::REPLACE, '/dataSource', $dataSource);
+        $this->addOperation(PatchOperation::Replace, '/dataSource', $dataSource);
 
         return $this;
     }
 
     public function email(?string $email): self
     {
-        $this->addOperation(PatchOperation::REPLACE, '/email', $email);
+        $this->addOperation(PatchOperation::Replace, '/email', $email);
 
         return $this;
     }
 
     public function secondaryEmail(?string $secondaryEmail): self
     {
-        $this->addOperation(PatchOperation::REPLACE, '/secondaryEmail', $secondaryEmail);
+        $this->addOperation(PatchOperation::Replace, '/secondaryEmail', $secondaryEmail);
 
         return $this;
     }
@@ -56,7 +56,7 @@ class UserPatch extends ApiEntityPatch
     public function phoneNumber(PhoneNumber $phoneNumber): self
     {
         $this->addOperation(
-            PatchOperation::REPLACE,
+            PatchOperation::Replace,
             '/phoneNumber',
             $phoneNumber->toArray()
         );
@@ -67,7 +67,7 @@ class UserPatch extends ApiEntityPatch
     public function secondaryPhoneNumber(PhoneNumber $phoneNumber): self
     {
         $this->addOperation(
-            PatchOperation::REPLACE,
+            PatchOperation::Replace,
             '/secondaryPhoneNumber',
             $phoneNumber->toArray()
         );
@@ -78,7 +78,7 @@ class UserPatch extends ApiEntityPatch
     public function birthDate(?Carbon $birthDate): self
     {
         $this->addOperation(
-            PatchOperation::REPLACE,
+            PatchOperation::Replace,
             '/birthDate',
             $birthDate?->format('m-d-Y')
         );
@@ -88,7 +88,7 @@ class UserPatch extends ApiEntityPatch
 
     public function primaryDepartmentId(string $primaryDepartmentId): self
     {
-        $this->addOperation(PatchOperation::REPLACE, '/primaryDepartmentId', $primaryDepartmentId);
+        $this->addOperation(PatchOperation::Replace, '/primaryDepartmentId', $primaryDepartmentId);
 
         return $this;
     }
@@ -96,7 +96,7 @@ class UserPatch extends ApiEntityPatch
     public function employmentDate(?Carbon $employmentDate): self
     {
         $this->addOperation(
-            PatchOperation::REPLACE,
+            PatchOperation::Replace,
             '/employmentDate',
             $employmentDate?->format('m-d-Y')
         );
@@ -107,7 +107,7 @@ class UserPatch extends ApiEntityPatch
     public function employmentEndDate(?Carbon $employmentEndDate): self
     {
         $this->addOperation(
-            PatchOperation::REPLACE,
+            PatchOperation::Replace,
             '/employmentEndDate',
             $employmentEndDate?->format('m-d-Y')
         );
@@ -118,7 +118,7 @@ class UserPatch extends ApiEntityPatch
     public function addAdditionalDepartment(AdditionalDepartment $department): self
     {
         $this->addOperation(
-            PatchOperation::ADD,
+            PatchOperation::Add,
             '/additionalDepartments/-',
             $department->toArray()
         );
@@ -129,7 +129,7 @@ class UserPatch extends ApiEntityPatch
     public function removeAdditionalDepartment(int $departmentIndex): self
     {
         $this->addOperation(
-            PatchOperation::REMOVE,
+            PatchOperation::Remove,
             "/additionalDepartments/$departmentIndex",
         );
 
@@ -139,7 +139,7 @@ class UserPatch extends ApiEntityPatch
     public function addUserGroup(UserGroup $userGroup): self
     {
         $this->addOperation(
-            PatchOperation::ADD,
+            PatchOperation::Add,
             '/userGroups/-',
             $userGroup->toArray()
         );
@@ -150,7 +150,7 @@ class UserPatch extends ApiEntityPatch
     public function removeUserGroup(int $userGroupIndex): self
     {
         $this->addOperation(
-            PatchOperation::REMOVE,
+            PatchOperation::Remove,
             "/userGroups/$userGroupIndex",
         );
 

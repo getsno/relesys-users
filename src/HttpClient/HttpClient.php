@@ -18,8 +18,7 @@ class HttpClient
     public function __construct(
         protected readonly string $client_id,
         protected readonly string $client_secret,
-    )
-    {
+    ) {
         $this->httpClient = Http::acceptJson()->baseUrl(self::BASE_URI);
     }
 

@@ -8,7 +8,5 @@ class Api
 {
     public function __construct(
         readonly protected HttpClient $httpClient,
-    )
-    {
-    }
+    ) {}
 }

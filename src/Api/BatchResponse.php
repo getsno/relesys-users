@@ -9,7 +9,5 @@ class BatchResponse
         public readonly array $data,
         public readonly ?string $nextUrl = null,
         public readonly ?string $previousUrl = null,
-    )
-    {
-    }
+    ) {}
 }
