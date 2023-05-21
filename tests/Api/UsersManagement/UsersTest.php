@@ -91,7 +91,7 @@ class UsersTest extends TestCase
             'primaryDepartmentId' => fake()->uuid,
             'phoneNumber'         => [
                 'countryCode' => 47,
-                'number'      => '46700524',
+                'number'      => fake()->phoneNumber,
             ],
             'userGroups'          => [
                 [
