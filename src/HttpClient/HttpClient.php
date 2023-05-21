@@ -77,7 +77,13 @@ class HttpClient
             return $response->json();
         } catch (RequestException $e) {
             $error = $e->response?->object()->error ?? $e->getMessage();
-            throw RelesysHttpClientException::requestFailed($error, $e->getCode(), $e);
+
+            throw RelesysHttpClientException::requestFailed(
+                $error,
+                $e->getCode(),
+                $e,
+                new FailedRequest($type->value, self::BASE_URI . $path, $params)
+            );
         }
     }
 
