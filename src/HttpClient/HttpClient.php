@@ -27,7 +27,7 @@ class HttpClient
      */
     public function get(string $path, array $params = []): array
     {
-        return $this->sendRequest(HttpMethod::GET, $path, $params);
+        return $this->sendRequest(HttpMethod::Get, $path, $params);
     }
 
     /**
@@ -35,7 +35,7 @@ class HttpClient
      */
     public function post(string $path, array $params = []): ?array
     {
-        return $this->sendRequest(HttpMethod::POST, $path, $params);
+        return $this->sendRequest(HttpMethod::Post, $path, $params);
     }
 
     /**
@@ -43,7 +43,7 @@ class HttpClient
      */
     public function put(string $path, array $params = []): void
     {
-        $this->sendRequest(HttpMethod::PUT, $path, $params);
+        $this->sendRequest(HttpMethod::Put, $path, $params);
     }
 
     /**
@@ -51,7 +51,7 @@ class HttpClient
      */
     public function patch(string $path, array $params = []): array
     {
-        return $this->sendRequest(HttpMethod::PATCH, $path, $params);
+        return $this->sendRequest(HttpMethod::Patch, $path, $params);
     }
 
     /**
@@ -59,7 +59,7 @@ class HttpClient
      */
     public function delete(string $path): void
     {
-        $this->sendRequest(HttpMethod::DELETE, $path);
+        $this->sendRequest(HttpMethod::Delete, $path);
     }
 
     /**
