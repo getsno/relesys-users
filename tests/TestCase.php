@@ -10,6 +10,7 @@ use Getsno\Relesys\Api\UserManagement\UserGroups;
 use Getsno\Relesys\Api\UserManagement\Departments;
 use Getsno\Relesys\Facades\RelesysFacade as Relesys;
 use Getsno\Relesys\Api\UserManagement\CustomFields;
+use Getsno\Relesys\Api\Communication\Communication;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -49,10 +50,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
             $relesysHttpClientMock = $this->mock(HttpClient::class, $mockCallback);
 
             $target = match ($apiType) {
-                'users'        => Users::class,
-                'departments'  => Departments::class,
-                'userGroups'   => UserGroups::class,
-                'customFields' => CustomFields::class,
+                'users'         => Users::class,
+                'departments'   => Departments::class,
+                'userGroups'    => UserGroups::class,
+                'customFields'  => CustomFields::class,
+                'communication' => Communication::class,
             };
             $apiMock = Mockery::mock($target, [$relesysHttpClientMock])->makePartial();
 

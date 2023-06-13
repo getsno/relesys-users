@@ -6,7 +6,9 @@ use Getsno\Relesys\Api\UserManagement\Entities\User;
 use Getsno\Relesys\Api\UserManagement\Entities\UserGroup;
 use Getsno\Relesys\Api\UserManagement\Entities\Department;
 
-/** Users */
+/**
+ * Users
+ */
 function getUserResponse(string $id): array
 {
     return [
@@ -134,7 +136,9 @@ function createDepartmentResponse(Department $department): array
     ];
 }
 
-/** UserGroups */
+/**
+ * UserGroups
+ */
 function getUserGroupResponse(string $id): array
 {
     return [
@@ -172,7 +176,9 @@ function createUserGroupResponse(UserGroup $userGroup): array
     ];
 }
 
-/** CustomFields */
+/**
+ * CustomFields
+ */
 function getCustomFieldsResponse(int $amount): array
 {
     $customFields = [
@@ -194,4 +200,56 @@ function getCustomFieldsResponse(int $amount): array
     }
 
     return $customFields;
+}
+
+/**
+ * Communication
+ */
+function getCommunicationTemplateResponse(string $id): array
+{
+    return [
+        'data' => [
+            'id'                            => fake()->uuid,
+            'name'                          => fake()->word,
+            'communicationTemplateCultures' => [
+                [
+                    'cultureCode' => 'en-GB',
+                    'sms'         => [
+                        'body' => 'Hi #name#!',
+                    ],
+                    'email'       => [
+                        'subject' => 'Welcome',
+                        'body'    => '<p>Hi #name#</p>',
+                    ],
+                ],
+                [
+                    'cultureCode' => 'nb-NO',
+                    'sms'         => [
+                        'body' => 'Hei, #name#!',
+                    ],
+                    'email'       => [
+                        'subject' => 'Velkommen',
+                        'body'    => 'Hei, #name#!',
+                    ],
+                ],
+            ],
+            'creationDateTime'              => fake()->date,
+            'lastModifiedDateTime'          => null,
+        ],
+    ];
+}
+
+function getCommunicationTemplatesResponse(int $amount): array
+{
+    $templates = [
+        'count' => $amount,
+        'data'  => [],
+    ];
+
+    while (count($templates['data']) < $amount) {
+        $currentIteration = count($templates['data']) + 1;
+        $templates['data'][] = [...getCommunicationTemplateResponse($currentIteration)['data']];
+    }
+
+    return $templates;
 }
