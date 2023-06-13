@@ -209,7 +209,7 @@ function getCommunicationTemplateResponse(string $id): array
 {
     return [
         'data' => [
-            'id'                            => fake()->uuid,
+            'id'                            => $id,
             'name'                          => fake()->word,
             'communicationTemplateCultures' => [
                 [
