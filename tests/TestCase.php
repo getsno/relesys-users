@@ -14,6 +14,9 @@ use Getsno\Relesys\Api\Communication\Communication;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
+    public const TEST_CLIENT_ID = '00000000-0000-0000-0000-000000000000';
+    public const TEST_CLIENT_SECRET = '666';
+
     protected function getPackageProviders($app): array
     {
         return [
@@ -24,12 +27,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function defineEnvironment($app): void
     {
         // Set relesys config as it's required for Service provider to test via facade
-        $client_id = config('relesys.client_id');
-        $client_secret = config('relesys.client_secret');
+        $clientId = config('relesys.client_id');
+        $clientSecret = config('relesys.client_secret');
 
-        if (empty($client_id) && empty($client_secret)) {
-            $app['config']->set('relesys.client_id', 'testing');
-            $app['config']->set('relesys.client_secret', 'testing');
+        if (empty($clientId) && empty($clientSecret)) {
+            $app['config']->set('relesys.client_id', self::TEST_CLIENT_ID);
+            $app['config']->set('relesys.client_secret', self::TEST_CLIENT_SECRET);
         }
     }
 
@@ -38,10 +41,10 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     protected function isTestingInIsolation(): bool
     {
-        $client_id = config('relesys.client_id');
-        $client_secret = config('relesys.client_secret');
+        $clientId = config('relesys.client_id');
+        $clientSecret = config('relesys.client_secret');
 
-        return $client_id === 'testing' && $client_secret === 'testing';
+        return $clientId === self::TEST_CLIENT_ID && $clientSecret === self::TEST_CLIENT_SECRET;
     }
 
     protected function mockFacadeIfTestingInIsolation(string $apiType, ?callable $mockCallback = null): void
