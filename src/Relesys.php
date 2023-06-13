@@ -2,10 +2,11 @@
 
 namespace Getsno\Relesys;
 
-use Getsno\Relesys\Api\UserManagement\Users;
 use Getsno\Relesys\HttpClient\HttpClient;
+use Getsno\Relesys\Api\UserManagement\Users;
 use Getsno\Relesys\Api\UserManagement\UserGroups;
 use Getsno\Relesys\Api\UserManagement\Departments;
+use Getsno\Relesys\Api\Communication\Communication;
 use Getsno\Relesys\Api\UserManagement\CustomFields;
 
 class Relesys
@@ -32,5 +33,10 @@ class Relesys
     public function customFields(): CustomFields
     {
         return new CustomFields($this->httpClient);
+    }
+
+    public function communication(): Communication
+    {
+        return new Communication($this->httpClient);
     }
 }
