@@ -7,7 +7,6 @@ use Getsno\Relesys\Api\ApiEntity;
 use Getsno\Relesys\Api\UserManagement\Enums\UserStatus;
 use Getsno\Relesys\Api\UserManagement\ValueObjects\UserGroup;
 use Getsno\Relesys\Api\UserManagement\ValueObjects\PhoneNumber;
-use Getsno\Relesys\Api\UserManagement\ValueObjects\CustomField;
 use Getsno\Relesys\Api\UserManagement\ValueObjects\AdditionalDepartment;
 
 class User extends ApiEntity
@@ -17,11 +16,7 @@ class User extends ApiEntity
      */
     public array $additionalDepartments = [];
     public ?Carbon $birthDate;
-
-    /**
-     * @var CustomField[]
-     */
-    public array $customFields;
+    public array $customFields = [];
     public ?string $dataSource;
     public ?string $departmentUrl;
     public ?string $email;
@@ -48,15 +43,6 @@ class User extends ApiEntity
     {
         foreach ($additionalDepartments as $additionalDepartment) {
             $this->additionalDepartments[] = AdditionalDepartment::fromArray($additionalDepartment);
-        }
-    }
-
-    protected function setCustomFields(array $customFields): void
-    {
-        $this->customFields = [];
-
-        foreach ($customFields as $customField) {
-            $this->customFields[] = CustomField::fromArray($customField);
         }
     }
 
