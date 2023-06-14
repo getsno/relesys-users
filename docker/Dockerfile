@@ -1,7 +1,7 @@
-FROM composer:2.5.4 AS composer
-FROM mlocati/php-extension-installer:2.1.8 AS php-ext-installer
+FROM composer:2.5.8 AS composer
+FROM mlocati/php-extension-installer:2.1.28 AS php-ext-installer
 
-FROM php:8.1.16-fpm
+FROM php:8.1.20-fpm
 
 # install php extensions
 COPY --from=php-ext-installer /usr/bin/install-php-extensions /usr/local/bin/
@@ -9,7 +9,7 @@ RUN install-php-extensions \
     mysqli \
     zip \
     pcntl \
-    xdebug-3.2.0
+    xdebug-3.2.1
 
 # add Composer
 ENV COMPOSER_ALLOW_SUPERUSER=1 COMPOSER_NO_INTERACTION=1 COMPOSER_HTACCESS_PROTECT=0
