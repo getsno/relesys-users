@@ -10,6 +10,6 @@ class AdditionalDepartment
     use CreatableFromArray;
     use ConvertibleToArray;
 
-    public string $id;
-    public ?string $dataSource;
+    public readonly string $id;
+    public readonly ?string $dataSource;
 }
