@@ -10,7 +10,7 @@ class TemplateCultures
     use CreatableFromArray;
     use ConvertibleToArray;
 
-    public string $cultureCode;
-    public TemplateSms $sms;
-    public TemplateEmail $email;
+    public readonly string $cultureCode;
+    public readonly TemplateSms $sms;
+    public readonly TemplateEmail $email;
 }
