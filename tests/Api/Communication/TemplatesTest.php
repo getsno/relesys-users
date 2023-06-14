@@ -8,7 +8,10 @@ use Getsno\Relesys\Api\ApiQueryParams;
 use Getsno\Relesys\Facades\RelesysFacade as Relesys;
 use Getsno\Relesys\Api\Communication\Communication;
 use Getsno\Relesys\Api\Communication\Entities\Template;
+use Getsno\Relesys\Api\Communication\Enums\MessageType;
 use Getsno\Relesys\Exceptions\RelesysHttpClientException;
+use Getsno\Relesys\Api\Communication\Enums\DeliveryMethod;
+use Getsno\Relesys\Api\Communication\ValueObjects\MessageBody;
 
 use function Getsno\Relesys\Tests\getCommunicationTemplateResponse;
 use function Getsno\Relesys\Tests\getCommunicationTemplatesResponse;
@@ -25,23 +28,81 @@ class TemplatesTest extends TestCase
     /**
      * @throws RelesysHttpClientException
      */
-    public function testSendMessage(): void
+    public function testSendMessageByTemplateId(): void
     {
-        // $testUserGroupId = fake()->uuid;
-        //
-        // $this->mockFacadeIfTestingInIsolation(
-        //     'userGroups',
-        //     static function (MockInterface $mock) use ($testUserGroupId) {
-        //         $mock->shouldReceive('get')
-        //             ->once()
-        //             ->with("userGroups/$testUserGroupId")
-        //             ->andReturn(getUserGroupResponse($testUserGroupId));
-        //     }
-        // );
-        //
-        // $userGroup = Relesys::userGroups()->getUserGroup($testUserGroupId);
-        //
-        // $this->assertEquals($testUserGroupId, $userGroup->id);
+        $testUserId = fake()->uuid;
+        $testTemplateId = fake()->uuid;
+
+        $this->mockFacadeIfTestingInIsolation(
+            'communication',
+            static function (MockInterface $mock) use ($testUserId) {
+                $mock->shouldReceive('post')
+                    ->once()
+                    ->withArgs(
+                        static fn(string $path, array $params) => $path === "communication/messages/$testUserId/send"
+                    );
+            }
+        );
+
+        Relesys::communication()->sendMessage($testUserId, DeliveryMethod::Both, $testTemplateId);
+    }
+
+    /**
+     * @throws RelesysHttpClientException
+     */
+    public function testSendMessageByType(): void
+    {
+        $testUserId = fake()->uuid;
+
+        $this->mockFacadeIfTestingInIsolation(
+            'communication',
+            static function (MockInterface $mock) use ($testUserId) {
+                $mock->shouldReceive('post')
+                    ->once()
+                    ->withArgs(
+                        static fn(string $path, array $params) => $path === "communication/messages/$testUserId/send"
+                    );
+            }
+        );
+
+        Relesys::communication()->sendMessage(
+            $testUserId,
+            DeliveryMethod::Both,
+            MessageType::Welcome->value
+        );
+    }
+
+    /**
+     * @throws RelesysHttpClientException
+     */
+    public function testSendCustomMessage(): void
+    {
+        $testUserId = fake()->uuid;
+
+        $this->mockFacadeIfTestingInIsolation(
+            'communication',
+            static function (MockInterface $mock) use ($testUserId) {
+                $mock->shouldReceive('post')
+                    ->once()
+                    ->withArgs(
+                        static fn(string $path, array $params) => $path === "communication/messages/$testUserId/send"
+                    );
+            }
+        );
+
+        Relesys::communication()->sendMessage(
+            $testUserId,
+            DeliveryMethod::Both,
+            messageBody: MessageBody::fromArray([
+                'email' => [
+                    'subject' => 'test',
+                    'body'    => 'Test email message',
+                ],
+                'sms'   => [
+                    'body' => 'test sms message',
+                ],
+            ])
+        );
     }
 
     /**

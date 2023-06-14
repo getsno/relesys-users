@@ -6,8 +6,10 @@ use Getsno\Relesys\Api\Api;
 use Getsno\Relesys\Api\BatchResponse;
 use Getsno\Relesys\Api\ApiQueryParams;
 use Getsno\Relesys\Api\Communication\Entities\Template;
+use Getsno\Relesys\Api\Communication\Enums\MessageType;
 use Getsno\Relesys\Exceptions\RelesysHttpClientException;
 use Getsno\Relesys\Api\Communication\Enums\DeliveryMethod;
+use Getsno\Relesys\Api\Communication\ValueObjects\MessageBody;
 
 class Communication extends Api
 {
@@ -17,15 +19,24 @@ class Communication extends Api
     public function sendMessage(
         string $userId,
         DeliveryMethod $deliveryMethod,
-        string $communicationTemplateId,
+        ?string $communicationTemplateId = null,
+        ?MessageType $messageType = null,
+        ?MessageBody $messageBody = null,
     ): void
     {
-        $this->httpClient->post(
-            "communication/messages/$userId/send",
-            [
+        $params = [
+            'deliveryMethod' => $deliveryMethod->value,
+        ];
 
-            ]
-        );
+        if ($communicationTemplateId !== null) {
+            $params['communicationTemplateId'] = $communicationTemplateId;
+        } elseif ($messageType !== null) {
+            $params['messageType'] = $messageType->value;
+        } else {
+            $params['messageBody'] = $messageBody;
+        }
+
+        $this->httpClient->post("communication/messages/$userId/send", $params);
     }
 
     /**
