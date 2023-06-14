@@ -28,7 +28,7 @@ This version requires PHP ^8.1 and supports Laravel 10.
 The package supports all the endpoints from "User Management" documentation section 
 _(including sorting, filtering and pagination)_. 
 
-The package interface is very similar to documentation sections (`customFields`, `departments`, `userGroups`, `users`), 
+The package interface is very similar to documentation sections (`customFields`, `departments`, `userGroups`, `users`, `communication`), 
 method names are the same as endpoint names.
 
 #### Examples
