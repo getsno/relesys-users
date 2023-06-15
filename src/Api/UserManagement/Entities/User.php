@@ -16,7 +16,7 @@ class User extends ApiEntity
      */
     public array $additionalDepartments = [];
     public ?Carbon $birthDate;
-    public array $customFields = [];
+    public array $customFields;
     public ?string $dataSource;
     public ?string $departmentUrl;
     public ?string $email;
